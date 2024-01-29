@@ -1,9 +1,15 @@
+import os
+
 import pandas as pd
 
 from joblib import load
 from sklearn import preprocessing
 
 def inference():
+  MODEL_DIR = os.environ['MODEL_DIR']
+  MODEL_NAME = os.environ['MODEL_NAME']
+  MODEL_PATH = os.path.join(MODEL_DIR, MODEL_NAME)
+
   test_dir = "./test.csv"
   test_csv = pd.read_csv(test_dir)
   test_csv.drop(['PassengerId', 'Name', 'Sex', 'Age', 'Ticket', 'Cabin', 'Embarked'], axis=1, inplace=True)
@@ -19,7 +25,7 @@ def inference():
 
   # Models training
   #-- Decision Tree
-  clf_dt = load('inference_dt.joblib')
+  clf_dt = load(MODEL_PATH)
   print("Decision Tree classification:")
   print(clf_dt.predict(test_csv[:10]))
 

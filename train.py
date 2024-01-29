@@ -1,3 +1,5 @@
+import os
+
 import pandas as pd
 
 from joblib import dump
@@ -5,6 +7,10 @@ from sklearn import preprocessing
 from sklearn.tree import DecisionTreeClassifier
 
 def train():
+  MODEL_DIR = os.environ['MODEL_DIR']
+  MODEL_NAME = os.environ['MODEL_NAME']
+  MODEL_PATH = os.path.join(MODEL_DIR, MODEL_NAME)
+
   # Load and read data
   train_dir = "./train.csv"
   train_csv = pd.read_csv(train_dir)
@@ -29,7 +35,7 @@ def train():
   clf_dt.fit(x_train, y_train)
 
   #-- save model
-  dump(clf_dt, 'inference_dt.joblib')
+  dump(clf_dt, MODEL_PATH)
 
 if __name__ == '__main__':
   train()
